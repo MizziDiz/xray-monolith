@@ -680,6 +680,7 @@ void CRender::add_Occluder(Fbox2& bb_screenspace)
 void CRender::set_Object(IRenderable* O)
 {
 	val_pObject = O;
+	val_pBusObject = NULL;
 }
 
 void CRender::rmNear()

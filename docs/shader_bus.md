@@ -47,8 +47,9 @@ bits of whatever the lane stores, so a lane written with `set` reads float bits 
 shows the mismatch through `kind` and `declared_kinds`.
 
 A lane whose id starts `obj_` is an object lane: each draw of an object reads that object's own
-value, and a draw of an object without one, or of level geometry, reads the lane's value. A draw
-of the player's hands, weapon or anything else on the HUD reads the actor's value. An object lane
+value, and a draw of an object without one, or of level geometry, reads the lane's value. On the
+HUD the item in hand and its HUD attachments read the item's value, and the hands read the actor's;
+lighting of both still follows the actor. An object lane
 binds a `float` to `float4`, and one pass binds at most 16 of them; the rest bind to nothing.
 
 ```hlsl
@@ -64,6 +65,10 @@ a resolution change, and the lane keeps its texture over a level change.
 -- in the .s
 shader:dx10texture("s_mymap", "$user$bus_mymap")
 ```
+
+On DX10/11 a shader can skip the `.s`: a texture it declares as `s_bus_<id>` and its blender
+leaves unbound shows `$user$bus_<id>`, so a model shader reads a lane with
+`Texture2D s_bus_mymap;` and one of the samplers the blender already binds, such as `smp_base`.
 
 A `bus_` constant declared as an `int` or a `bool`, an array or matrix on DX9, or one larger than
 4096 rows binds to nothing, the engine never writes it, and the log gets one line with the

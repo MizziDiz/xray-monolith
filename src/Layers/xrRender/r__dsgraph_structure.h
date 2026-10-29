@@ -21,6 +21,9 @@ class R_dsgraph_structure : public IRender_interface, public pureFrame
 {
 public:
 	IRenderable* val_pObject;
+	IRenderable* val_pBusObject; // overrides val_pObject for shader bus obj_ lanes only, NULL = none
+	IC IRenderable* bus_source() const { return val_pBusObject ? val_pBusObject : val_pObject; }
+	virtual void set_BusObject(IRenderable* O) { val_pBusObject = O; }
 	Fmatrix* val_pTransform;
 	BOOL val_bHUD;
 	BOOL val_bCamAttached;
@@ -131,6 +134,7 @@ public:
 	R_dsgraph_structure()
 	{
 		val_pObject = NULL;
+		val_pBusObject = NULL;
 		val_pTransform = NULL;
 		val_bHUD = FALSE;
 		val_bCamAttached = FALSE;

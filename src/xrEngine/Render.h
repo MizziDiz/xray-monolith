@@ -289,6 +289,8 @@ public:
 	virtual void set_Invisible(BOOL V) = 0;
 	virtual void flush() = 0;
 	virtual void set_Object(IRenderable* O) = 0;
+	// shader bus obj_ lanes of the following visuals read O instead of the set_Object one, until the next set_Object
+	virtual void set_BusObject(IRenderable* O) {}
 	virtual void add_Occluder(Fbox2& bb_screenspace) = 0; // mask screen region as oclluded (-1..1, -1..1)
 	virtual void add_Visual(IRenderVisual* V) = 0; // add visual leaf (no culling performed at all)
 	virtual void add_Geometry(IRenderVisual* V) = 0; // add visual(s) (all culling performed)

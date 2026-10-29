@@ -189,6 +189,9 @@ public:
 #endif	//	USE_DX10
 	void r_ColorWriteEnable(bool cR = true, bool cG = true, bool cB = true, bool cA = true);
 	void r_End();
+#if defined(USE_DX10) || defined(USE_DX11)
+	void r_BusTextures();
+#endif
 
 	//
 

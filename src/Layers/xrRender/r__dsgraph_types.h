@@ -81,6 +81,7 @@ namespace R_dsgraph
 		dxRender_Visual* pVisual;
 		Fmatrix Matrix; // matrix (copy)
 		Fmatrix PrevMatrix;
+		IRenderable* pBusObject; // shader bus obj_ lanes source, can differ from pObject (HUD item)
 	};
 
 	struct _MatrixItemS : public _MatrixItem

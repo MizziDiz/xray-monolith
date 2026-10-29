@@ -328,6 +328,8 @@ bool attachable_hud_item::need_renderable()
 
 void attachable_hud_item::render()
 {
+	if (m_parent_hud_item->has_object())
+		::Render->set_BusObject(&m_parent_hud_item->object());
 	::Render->set_Transform(&m_item_transform);
 	::Render->add_Visual(m_model->dcast_RenderVisual());
 
@@ -341,6 +343,8 @@ void attachable_hud_item::render()
 				pair.second->Render(m_model, &m_item_transform);
 		}
 	}
+
+	::Render->set_BusObject(NULL);
 }
 
 bool attachable_hud_item::render_item_ui_query()

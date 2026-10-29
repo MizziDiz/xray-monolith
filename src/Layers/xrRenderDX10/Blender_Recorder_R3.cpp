@@ -260,8 +260,32 @@ void CBlender_Compile::r_ComputePass(LPCSTR cs)
 }
 #endif
 
+// a texture s_bus_<id> the blender left unbound samples shader bus texture lane <id>,
+// so any shader (model blenders included) can read a lane by declaring it
+void CBlender_Compile::r_BusTextures()
+{
+	for (u32 i = 0; i < ctable.table.size(); ++i)
+	{
+		R_constant* C = &*ctable.table[i];
+		if (C->type != RC_dx10texture || 0 != strncmp(*C->name, "s_bus_", 6))
+			continue;
+
+		const u32 stage = C->samp.index;
+		bool bound = false;
+		for (u32 t = 0; t < passTextures.size(); ++t)
+			bound |= (passTextures[t].first == stage);
+		if (bound)
+			continue;
+
+		string256 alias;
+		xr_sprintf(alias, "$user$bus_%s", *C->name + 6);
+		passTextures.push_back(mk_pair(stage, ref_texture(DEV->_CreateTexture(alias))));
+	}
+}
+
 void CBlender_Compile::r_End()
 {
+	r_BusTextures();
 	SetMapping();
 	dest.constants = DEV->_CreateConstantTable(ctable);
 	dest.state = DEV->_CreateState(RS.GetContainer());

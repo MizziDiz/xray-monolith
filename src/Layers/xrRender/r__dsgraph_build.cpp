@@ -60,6 +60,7 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic(dxRender_Visual* pVisual, Fve
 		mapSorted_Node* N = test.insertInAnyWay(distSQ);
 		N->val.ssa = SSA;
 		N->val.pObject = RI.val_pObject;
+		N->val.pBusObject = RI.bus_source();
 		N->val.pVisual = pVisual;
 		N->val.Matrix = *RI.val_pTransform;
 		N->val.se = sh_d; // 4=L_special
@@ -73,6 +74,7 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic(dxRender_Visual* pVisual, Fve
 	// Create common node
 	// NOTE: Invisible elements exist only in R1
 	_MatrixItem item = {SSA, RI.val_pObject, pVisual, *RI.val_pTransform};
+	item.pBusObject = RI.bus_source();
 
 #if defined(USE_DX11) //  Redotix99: for 3D Shader Based Scopes 		
 	switch (sh->flags.iScopeLense) {	
@@ -83,6 +85,7 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic(dxRender_Visual* pVisual, Fve
 			mapHUD_Node* N = mapHUD.insertInAnyWay(EPS);
 			N->val.ssa = SSA;
 			N->val.pObject = RI.val_pObject;
+			N->val.pBusObject = RI.bus_source();
 			N->val.pVisual = pVisual;
 			N->val.Matrix = *RI.val_pTransform;
 			N->val.se = sh;
@@ -93,6 +96,7 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic(dxRender_Visual* pVisual, Fve
 				HUDMask_Node* N2 = HUDMask.insertInAnyWay(EPS);
 				N2->val.ssa = SSA;
 				N2->val.pObject = RI.val_pObject;
+				N2->val.pBusObject = RI.bus_source();
 				N2->val.pVisual = pVisual;
 				N2->val.Matrix = *RI.val_pTransform;
 				N2->val.se = sh;
@@ -104,6 +108,7 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic(dxRender_Visual* pVisual, Fve
 			mapHUD_Node * N = mapScopeHUD.insertInAnyWay(distSQ);
 			N->val.ssa = SSA;
 			N->val.pObject = RI.val_pObject;
+			N->val.pBusObject = RI.bus_source();
 			N->val.pVisual = pVisual;
 			N->val.Matrix = *RI.val_pTransform;
 			N->val.se = sh;
@@ -114,6 +119,7 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic(dxRender_Visual* pVisual, Fve
 			mapSorted_Node * N = mapScopeHUDSorted.insertInAnyWay(distSQ);
 			N->val.ssa = SSA;
 			N->val.pObject = RI.val_pObject;
+			N->val.pBusObject = RI.bus_source();
 			N->val.pVisual = pVisual;
 			N->val.Matrix = *RI.val_pTransform;
 			N->val.se = sh;
@@ -133,6 +139,7 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic(dxRender_Visual* pVisual, Fve
 				mapSorted_Node* N = RI.val_bCamAttached ? mapCamAttachedEmissive.insertInAnyWay(distSQ) : mapHUDEmissive.insertInAnyWay(distSQ);
 				N->val.ssa = SSA;
 				N->val.pObject = RI.val_pObject;
+				N->val.pBusObject = RI.bus_source();
 				N->val.pVisual = pVisual;
 				N->val.Matrix = *RI.val_pTransform;
 				N->val.se = &*pVisual->shader->E[4]; // 4=L_special
@@ -141,6 +148,7 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic(dxRender_Visual* pVisual, Fve
 			mapSorted_Node* N = RI.val_bCamAttached ? mapCamAttachedSorted.insertInAnyWay(distSQ) : mapHUDSorted.insertInAnyWay(distSQ);
 			N->val.ssa = SSA;
 			N->val.pObject = RI.val_pObject;
+			N->val.pBusObject = RI.bus_source();
 			N->val.pVisual = pVisual;
 			N->val.Matrix = *RI.val_pTransform;
 			N->val.se = sh;
@@ -151,6 +159,7 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic(dxRender_Visual* pVisual, Fve
 			mapHUD_Node* N = RI.val_bCamAttached ? mapCamAttached.insertInAnyWay(distSQ) : mapHUD.insertInAnyWay(distSQ);
 			N->val.ssa = SSA;
 			N->val.pObject = RI.val_pObject;
+			N->val.pBusObject = RI.bus_source();
 			N->val.pVisual = pVisual;
 			N->val.Matrix = *RI.val_pTransform;
 			N->val.se = sh;
@@ -161,6 +170,7 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic(dxRender_Visual* pVisual, Fve
 				HUDMask_Node* N2 = val_bCamAttached ? HUDMaskCamAttached.insertInAnyWay(distSQ) : HUDMask.insertInAnyWay(distSQ);
 				N2->val.ssa = SSA;
 				N2->val.pObject = RI.val_pObject;
+				N2->val.pBusObject = RI.bus_source();
 				N2->val.pVisual = pVisual;
 				N2->val.Matrix = *RI.val_pTransform;
 				N2->val.se = sh;
@@ -173,6 +183,7 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic(dxRender_Visual* pVisual, Fve
 				mapSorted_Node* N = RI.val_bCamAttached ? mapCamAttachedEmissive.insertInAnyWay(distSQ) : mapHUDEmissive.insertInAnyWay(distSQ);
 				N->val.ssa = SSA;
 				N->val.pObject = RI.val_pObject;
+				N->val.pBusObject = RI.bus_source();
 				N->val.pVisual = pVisual;
 				N->val.Matrix = *RI.val_pTransform;
 				N->val.se = &*pVisual->shader->E[4]; // 4=L_special
@@ -194,6 +205,7 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic(dxRender_Visual* pVisual, Fve
 		mapSorted_Node* N = mapSorted.insertInAnyWay(distSQ);
 		N->val.ssa = SSA;
 		N->val.pObject = RI.val_pObject;
+		N->val.pBusObject = RI.bus_source();
 		N->val.pVisual = pVisual;
 		N->val.Matrix = *RI.val_pTransform;
 		N->val.se = sh;
@@ -211,6 +223,7 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic(dxRender_Visual* pVisual, Fve
 		mapSorted_Node* N = mapEmissive.insertInAnyWay(distSQ);
 		N->val.ssa = SSA;
 		N->val.pObject = RI.val_pObject;
+		N->val.pBusObject = RI.bus_source();
 		N->val.pVisual = pVisual;
 		N->val.Matrix = *RI.val_pTransform;
 		N->val.se = &*pVisual->shader->E[4]; // 4=L_special
@@ -220,6 +233,7 @@ void R_dsgraph_structure::r_dsgraph_insert_dynamic(dxRender_Visual* pVisual, Fve
 		mapSorted_Node* N = mapWmark.insertInAnyWay(distSQ);
 		N->val.ssa = SSA;
 		N->val.pObject = RI.val_pObject;
+		N->val.pBusObject = RI.bus_source();
 		N->val.pVisual = pVisual;
 		N->val.Matrix = *RI.val_pTransform;
 		N->val.se = sh;
@@ -354,6 +368,7 @@ void R_dsgraph_structure::r_dsgraph_insert_static(dxRender_Visual* pVisual)
 		mapSorted_Node* N = mapDistort.insertInAnyWay(distSQ);
 		N->val.ssa = SSA;
 		N->val.pObject = NULL;
+		N->val.pBusObject = NULL;
 		N->val.pVisual = pVisual;
 		N->val.Matrix = Fidentity;
 		N->val.se = &*pVisual->shader->E[4]; // 4=L_special
@@ -371,6 +386,7 @@ void R_dsgraph_structure::r_dsgraph_insert_static(dxRender_Visual* pVisual)
 		mapWater_Node* N = mapWater.insertInAnyWay(distSQ);
 		N->val.ssa = SSA;
 		N->val.pObject = NULL;
+		N->val.pBusObject = NULL;
 		N->val.pVisual = pVisual;
 		N->val.Matrix = Fidentity;
 		N->val.se = sh;
@@ -383,6 +399,7 @@ void R_dsgraph_structure::r_dsgraph_insert_static(dxRender_Visual* pVisual)
 	{
 		mapSorted_Node* N = mapSorted.insertInAnyWay(distSQ);
 		N->val.pObject = NULL;
+		N->val.pBusObject = NULL;
 		N->val.pVisual = pVisual;
 		N->val.Matrix = Fidentity;
 		N->val.se = sh;
@@ -400,6 +417,7 @@ void R_dsgraph_structure::r_dsgraph_insert_static(dxRender_Visual* pVisual)
 		mapSorted_Node* N = mapEmissive.insertInAnyWay(distSQ);
 		N->val.ssa = SSA;
 		N->val.pObject = NULL;
+		N->val.pBusObject = NULL;
 		N->val.pVisual = pVisual;
 		N->val.Matrix = Fidentity;
 		N->val.se = &*pVisual->shader->E[4]; // 4=L_special
@@ -409,6 +427,7 @@ void R_dsgraph_structure::r_dsgraph_insert_static(dxRender_Visual* pVisual)
 		mapSorted_Node* N = mapWmark.insertInAnyWay(distSQ);
 		N->val.ssa = SSA;
 		N->val.pObject = NULL;
+		N->val.pBusObject = NULL;
 		N->val.pVisual = pVisual;
 		N->val.Matrix = Fidentity;
 		N->val.se = sh;
@@ -425,6 +444,7 @@ void R_dsgraph_structure::r_dsgraph_insert_static(dxRender_Visual* pVisual)
 		mapLandscape_Node* N = mapLandscape.insertInAnyWay(distSQ);
 		N->val.ssa = SSA;
 		N->val.pObject = NULL;
+		N->val.pBusObject = NULL;
 		N->val.pVisual = pVisual;
 		N->val.Matrix = Fidentity;
 		N->val.se = sh;

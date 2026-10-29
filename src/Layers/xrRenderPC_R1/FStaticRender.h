@@ -114,7 +114,8 @@ public:
 	IRender_Sector* getSectorActive();
 	IRenderVisual* model_CreatePE(LPCSTR name);
 	void ApplyBlur4(FVF::TL4uv* dest, u32 w, u32 h, float k);
-	void apply_object(IRenderable* O);
+	void apply_object(IRenderable* O, IRenderable* bus);
+	void apply_object(IRenderable* O) { apply_object(O, O); }
 	IC void apply_lmaterial()
 	{
 		RCache.bus_object.apply_static();

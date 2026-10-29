@@ -224,9 +224,12 @@ public:
 	IC void occq_end(u32& ID) { HWOCC.occq_end(ID); }
 	IC R_occlusion::occq_result occq_get(u32& ID) { return HWOCC.occq_get(ID); }
 
-	ICF void apply_object(IRenderable* O)
+	ICF void apply_object(IRenderable* O) { apply_object(O, O); }
+
+	// bus: the object whose shader bus obj_ lanes the draw reads, lighting still comes from O
+	ICF void apply_object(IRenderable* O, IRenderable* bus)
 	{
-		RCache.bus_object.apply(O);
+		RCache.bus_object.apply(bus);
 		if (0 == O) return;
 		if (0 == O->renderable_ROS()) return;
 		CROS_impl& LT = *((CROS_impl*)O->renderable_ROS());

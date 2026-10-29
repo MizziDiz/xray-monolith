@@ -57,7 +57,7 @@ void __fastcall mapMatrix_Render(mapMatrixItems& N)
 	{
 		_MatrixItem& Ni = *I;
 		RCache.set_xform_world(Ni.Matrix);
-		RImplementation.apply_object(Ni.pObject);
+		RImplementation.apply_object(Ni.pObject, Ni.pBusObject);
 		RImplementation.apply_lmaterial();
 
 		float LOD = calcLOD(Ni.ssa, Ni.pVisual->vis.sphere.R);
@@ -77,7 +77,7 @@ void __fastcall sorted_L1(mapSorted_Node* N)
 	VERIFY(V && V->shader._get());
 	RCache.set_Element(N->val.se);
 	RCache.set_xform_world(N->val.Matrix);
-	RImplementation.apply_object(N->val.pObject);
+	RImplementation.apply_object(N->val.pObject, N->val.pBusObject);
 	RImplementation.apply_lmaterial();
 	V->Render(calcLOD(N->key, V->vis.sphere.R));
 }
@@ -92,7 +92,7 @@ void __fastcall water_node_ssr(mapSorted_Node* N)
 	RCache.set_Shader(RImplementation.Target->s_ssfx_water_ssr);
 
 	RCache.set_xform_world(N->val.Matrix);
-	RImplementation.apply_object(N->val.pObject);
+	RImplementation.apply_object(N->val.pObject, N->val.pBusObject);
 	RImplementation.apply_lmaterial();
 
 	RCache.set_c("cam_pos", RImplementation.Target->Position_previous.x, RImplementation.Target->Position_previous.y, RImplementation.Target->Position_previous.z, 0.0f);
@@ -119,7 +119,7 @@ void __fastcall water_node(mapSorted_Node* N)
 #endif
 
 	RCache.set_xform_world(N->val.Matrix);
-	RImplementation.apply_object(N->val.pObject);
+	RImplementation.apply_object(N->val.pObject, N->val.pBusObject);
 	RImplementation.apply_lmaterial();
 
 	// Wind settings

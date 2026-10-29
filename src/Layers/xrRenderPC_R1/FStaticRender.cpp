@@ -374,6 +374,7 @@ void CRender::set_Object(IRenderable* O)
 {
 	VERIFY(g_bRendering);
 	val_pObject = O; // NULL is OK, trust me :)
+	val_pBusObject = NULL;
 	if (val_pObject)
 	{
 		VERIFY(fast_dynamic_cast<CObject*>(O) || fast_dynamic_cast<CPS_Instance*>(O));
@@ -397,9 +398,9 @@ void CRender::set_Object(IRenderable* O)
 	}
 }
 
-void CRender::apply_object(IRenderable* O)
+void CRender::apply_object(IRenderable* O, IRenderable* bus)
 {
-	RCache.bus_object.apply(O);
+	RCache.bus_object.apply(bus);
 	if (0 == O) return;
 	if (O->renderable_ROS())
 	{
