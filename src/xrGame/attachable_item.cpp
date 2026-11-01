@@ -67,8 +67,11 @@ void CAttachableItem::OnH_A_Chield()
 
 void CAttachableItem::renderable_Render()
 {
+	// an attached item reads its own shader bus obj_ lanes, not its owner's
+	::Render->set_BusObject(&object());
 	::Render->set_Transform(&object().XFORM());
 	::Render->add_Visual(object().Visual());
+	::Render->set_BusObject(NULL);
 }
 
 void CAttachableItem::OnH_A_Independent()

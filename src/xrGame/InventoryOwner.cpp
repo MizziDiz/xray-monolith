@@ -326,7 +326,12 @@ bool CInventoryOwner::IsTrading()
 void CInventoryOwner::renderable_Render()
 {
 	if (inventory().ActiveItem())
+	{
+		// the item in hands reads its own shader bus obj_ lanes, not its owner's
+		::Render->set_BusObject(&inventory().ActiveItem()->object());
 		inventory().ActiveItem()->renderable_Render();
+		::Render->set_BusObject(NULL);
+	}
 
 	CAttachmentOwner::renderable_Render();
 }
